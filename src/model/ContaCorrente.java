@@ -7,6 +7,6 @@ public class ContaCorrente extends Conta{
 
     public ContaCorrente(){
         setValorChequeEspecial(valorChequeEs);
-        setSaldo(1);
+        setSaldo(getSaldo()+valorChequeEs);
     }
 }

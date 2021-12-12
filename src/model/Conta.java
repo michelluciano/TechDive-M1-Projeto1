@@ -5,10 +5,22 @@ public class Conta {
     private String nome;
     private String cpf; // TODO: validar o cpf depois
     private double rendaMensal;
-    private int conta; // TODO: o sistema deve gerar a sequencia
-    private int agencia; // TODO: 001 - Florianópolis 002 = São José
+    private int conta; // TODO: o sistema deve gerar a sequencia - FEITO
+    private int agencia; // TODO: 001 - Florianópolis 002 = São José - FEITO
     private double saldo;
     private double valorChequeEspecial;
+    static int serialContas =0;
+
+    public Conta() {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.rendaMensal = rendaMensal;
+        serialContas++;
+        this.conta = serialContas;
+        this.agencia = agencia;
+        this.saldo = 0;
+        this.valorChequeEspecial = 0;
+    }
 
     //getter e setter
     public String getNome() {
@@ -69,28 +81,47 @@ public class Conta {
 
     //Métodos
 
-    public String sacar(double valor){
-        if(valor < saldo){
+    public void sacar(double valor){
+        System.out.println("");
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("++++++++++++++++Realizando Saque+++++++++++");
+        System.out.println(" - Saldo Anterior:   \tR$"+this.saldo);
+        System.out.println(" - Valor do Saque:   \tR$"+valor);
+        if(valor <= this.saldo){
             saldo = saldo - valor;
-            return "Saque realizado no valor de R$"+valor;
+            System.out.println(" - Saldo Atual:      \tR$"+this.saldo);
+
         }else{
-            return "Saldo insuficiente.";
+            System.out.println(" - Saldo insuficiente para realizar esta transação.");
         }
+
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("");
     }
 
-    public double depositar( double valor){
-        saldo = saldo + valor;
-        return saldo;
+    public void depositar( double valor){
+        System.out.println("");
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("++++++++++++++++ Depósito Realizado com Sucesso!+++++++++++");
+        System.out.println(" - Saldo Anterior:   \tR$"+this.saldo);
+        this.saldo = this.saldo + valor;
+        System.out.println(" - Saldo Atual:      \tR$"+this.saldo);
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("");
     }
 
     public void saldo(int numConta){
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         System.out.println("++++++++++++++++ Dados da Conta Bancária+++++++++++++++++++");
         System.out.println(" - Nome              \t    " + getNome()+"              \t+");
         System.out.println(" - Número da CPF     \t    " + getCpf()+"               \t+");
         System.out.println(" - Número da conta   \t    " + numConta+"               \t+");
         System.out.println(" - Agência           \t    " + ((getAgencia() == 1) ? "001 - Florianópolis":"002 - São Jose")+"          \t+");
+        System.out.println(" - Valor do Cheque Especial\t R$ " + getValorChequeEspecial()+"\t+");
         System.out.println(" - Saldo             \t R$ " + getSaldo()+"             \t+");
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("");
     }
 
     public void extrato( int conta){
@@ -103,13 +134,30 @@ public class Conta {
         System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++");
     }
 
-    public String transferir(double valor, int contaOrigem, int contaDestino){
-        return "Foi trasnferido o valor de R$"+valor+
-                "\nDa conta :"+contaOrigem+
-                "\nPara a conta:"+contaDestino;
+    public void transferePara(double valor, Conta contaDestino){
+        System.out.println("");
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("++++++++++++++++Realizando Transferencia+++++++++++");
+        System.out.println(" - Saldo Anterior:        \tR$"+this.saldo);
+        System.out.println(" - Valor da trasnferencia:\tR$"+valor);
+        if(valor <= this.saldo){
+            this.saldo = this.saldo - valor;
+            contaDestino.saldo = contaDestino.saldo + valor;
+            System.out.println(" - Saldo Atual:      \tR$"+this.saldo);
+        }else{
+            System.out.println(" - Saldo insuficiente para realizar esta transação.");
+        }
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("");
+
+
     }
 
-    public String alterarDadosCadastrados(String nome){
-        return "Alterado com sucesso";
+    public void alterarDadosCadastrados(String nome, double rendaMensal, int agencia) {
+            this.nome = nome;
+            this.rendaMensal = rendaMensal;
+            this.agencia = agencia;
+        System.out.println("+++++++++++ Dados alterados com suceesso!+++++++");
+        System.out.println("");
     }
 }

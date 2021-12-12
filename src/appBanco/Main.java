@@ -22,7 +22,7 @@ public class Main {
 
         do{
             System.out.println("Escolha uma opção abaixo:");
-            System.out.println("1 - Abrir conta");
+            System.out.println("1 - Abrir/Alterar conta");
             System.out.println("2 - Sacar");
             System.out.println("3 - Depositar");
             System.out.println("4 - Saldo");
@@ -33,7 +33,7 @@ public class Main {
 
             switch (opcao){
                 case 1:
-                    System.out.println("Qual tipo de conta você deseja abrir?\n1.Conta Corrente\n2.Conta Investimento\n3.Conta Poupança");
+                    System.out.println("Qual tipo de conta você deseja abrir?\n1.Conta Corrente\n2.Conta Investimento\n3.Conta Poupança\n4.Alterar dados de conta existente");
                     opcaoConta = input.nextInt();
                     if (opcaoConta == 1){
                         cc = new ContaCorrente();
@@ -71,7 +71,7 @@ public class Main {
                         }
                         System.out.println("Digite o valor do saldo inicial:");
                         ci.setSaldo(input.nextDouble());
-                    }else{
+                    }else if (opcaoConta ==3){
                         cp = new ContaPoupanca();
                         System.out.println("Digite o nome do cliente:");
                         cp.setNome(input.nextLine());
@@ -88,6 +88,20 @@ public class Main {
                         }
                         System.out.println("Digite o valor do saldo inicial:");
                         cp.setSaldo(input.nextDouble());
+                    }else{
+                        System.out.println();
+                        System.out.println("Digite o nome do cliente:");
+                        String nome=input.nextLine();
+                        System.out.println("Digite a renda mensal:");
+                        double rendaMensal= input.nextDouble();
+                        System.out.println("Digite a Agencia:\n 001 - Florianópolis\n002 - São José");
+                        int agencia =0;
+                        if (input.nextInt() == 1){
+                            agencia =1;
+                        }else if (input.nextInt() == 2){
+                            agencia= 2;
+                        }
+                        cc.alterarDadosCadastrados(nome,rendaMensal,agencia);
                     }
                     break;
                 case 2 :
@@ -117,18 +131,27 @@ public class Main {
                     System.out.println("Digite o numero da conta para verificar o SALDO:");
                     numeroDaConta = input.nextInt();
                     cc.saldo(numeroDaConta);
-                    
-                break;
-                case 5:
-                    System.out.println("Digite o numero da conta que será realizado o SAQUE:");
-                    numeroDaConta = input.nextInt();
 
                 break;
+                case 5:
+                    //transferir
+                    System.out.println("Digite o numero da conta para a trasnferencia:");
+                    numeroDaConta = input.nextInt();
+                    System.out.println("Digite o valor a ser trasnferido: R$");
+                    valorTransacao = input.nextDouble();
+
+                    cc.transferePara(valorTransacao,cc);
+
+                break;
+                case 6:
+                    //relatorios;
+
+                    break;
             }// fim switch
 
 
 
-        }while (opcao != 6);
+        }while (opcao != 7);
 
     }// fecha main
 }// fecha classe
