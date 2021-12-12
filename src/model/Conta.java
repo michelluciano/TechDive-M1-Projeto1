@@ -9,18 +9,21 @@ public class Conta {
     private int agencia; // TODO: 001 - Florianópolis 002 = São José - FEITO
     private double saldo;
     private double valorChequeEspecial;
-    static int serialContas =0;
+    static int serialContas =1;
+
+    public Conta(String nome, String cpf, double rendaMensal) {
+            this.nome = nome;
+            this.cpf = cpf;
+            this.rendaMensal = rendaMensal;
+            serialContas++;
+            this.conta = serialContas;
+            this.saldo = 0;
+            this.valorChequeEspecial = 0;
+    }
 
     public Conta() {
-        this.nome = nome;
-        this.cpf = cpf;
-        this.rendaMensal = rendaMensal;
-        serialContas++;
-        this.conta = serialContas;
-        this.agencia = agencia;
-        this.saldo = 0;
-        this.valorChequeEspecial = 0;
     }
+
 
     //getter e setter
     public String getNome() {
@@ -103,54 +106,50 @@ public class Conta {
         System.out.println("");
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         System.out.println("++++++++++++++++ Depósito Realizado com Sucesso!+++++++++++");
-        System.out.println(" - Saldo Anterior:   \tR$"+this.saldo);
+        System.out.println(" - Saldo Anterior:      \tR$"+this.saldo);
+        System.out.println(" - Valor do deposito:   \tR$"+valor);
         this.saldo = this.saldo + valor;
-        System.out.println(" - Saldo Atual:      \tR$"+this.saldo);
+        System.out.println(" - Saldo Atual:         \tR$"+this.saldo);
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         System.out.println("");
     }
 
     public void saldo(int numConta){
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-        System.out.println("++++++++++++++++ Dados da Conta Bancária+++++++++++++++++++");
-        System.out.println(" - Nome              \t    " + getNome()+"              \t+");
-        System.out.println(" - Número da CPF     \t    " + getCpf()+"               \t+");
-        System.out.println(" - Número da conta   \t    " + numConta+"               \t+");
-        System.out.println(" - Agência           \t    " + ((getAgencia() == 1) ? "001 - Florianópolis":"002 - São Jose")+"          \t+");
-        System.out.println(" - Valor do Cheque Especial\t R$ " + getValorChequeEspecial()+"\t+");
-        System.out.println(" - Saldo             \t R$ " + getSaldo()+"             \t+");
+        System.out.println("++++++++++++++++ Saldo da Conta Bancária+++++++++++++++++++");
+        System.out.println(" - Saldo                   \t R$ " + getSaldo());
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         System.out.println("");
     }
 
     public void extrato( int conta){
-        System.out.println("++++++++++++++++ Extrato Conta +++++++++++++++++++++");
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("++++++++++++++++ Extrato Conta ++++++++++++++++++++++++++++");
         System.out.println(" - Nome              \t\t\t    " + getNome());
         System.out.println(" - Número da CPF  ´  \t\t\t    " + getCpf());
         System.out.println(" - Número da conta   \t\t\t    " + conta);
         System.out.println(" - Agência           \t\t\t    " + ((getAgencia() == 1) ? "001 - Florianópolis":"002 - São Jose"));
         System.out.println(" - Saldo             \t\t\t R$ " + getSaldo());
-        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     }
 
-    public void transferePara(double valor, Conta contaDestino){
+    public void transferePara(double valor, Conta contaDestino) {
         System.out.println("");
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-        System.out.println("++++++++++++++++Realizando Transferencia+++++++++++");
-        System.out.println(" - Saldo Anterior:        \tR$"+this.saldo);
-        System.out.println(" - Valor da trasnferencia:\tR$"+valor);
-        if(valor <= this.saldo){
-            this.saldo = this.saldo - valor;
-            contaDestino.saldo = contaDestino.saldo + valor;
-            System.out.println(" - Saldo Atual:      \tR$"+this.saldo);
-        }else{
-            System.out.println(" - Saldo insuficiente para realizar esta transação.");
-        }
+        System.out.println("++++++++++++++++ Realizando Transferencia+++++++++++");
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-        System.out.println("");
-
-
+        System.out.println("++++++++++++++Dados Conta Origem+++++++++++++++++++++++++++");
+        System.out.println(" - Numero da Conta Origem:   \t"+this.conta);
+        System.out.println(" - Saldo Anterior:           \tR$"+this.saldo);
+        System.out.println(" - Valor da trasnferencia:   \tR$"+valor);
+                            this.saldo = this.saldo - valor;
+        contaDestino.setSaldo(contaDestino.getSaldo() + valor);
+        System.out.println(" - Saldo Atual:         \tR$"+this.saldo);
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("++++++++++++++Dados Conta Destino++++++++++++++++++++++++++");
+        System.out.println(" - Numero da conta: \t "+contaDestino.getConta());
+        System.out.println(" - Valor recebido : \t "+valor);
     }
 
     public void alterarDadosCadastrados(String nome, double rendaMensal, int agencia) {
@@ -159,5 +158,25 @@ public class Conta {
             this.agencia = agencia;
         System.out.println("+++++++++++ Dados alterados com suceesso!+++++++");
         System.out.println("");
+        System.out.println("++++++++++++++++ Dados da Conta +++++++++++++++++++++");
+        System.out.println(" - Nome              \t\t\t    " + getNome());
+        System.out.println(" - Número da CPF  ´  \t\t\t    " + getCpf());
+        System.out.println(" - Número da conta   \t\t\t    " + getConta());
+        System.out.println(" - Agência           \t\t\t    " + ((getAgencia() == 1) ? "001 - Florianópolis":"002 - São Jose"));
+        System.out.println(" - Saldo             \t\t\t R$ " + getSaldo());
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++");
+    }
+
+    @Override
+    public String toString() {
+        return "Conta{" +
+                "nome='" + nome + '\'' +
+                ", cpf='" + cpf + '\'' +
+                ", rendaMensal=" + rendaMensal +
+                ", conta=" + conta +
+                ", agencia=" + agencia +
+                ", saldo=" + saldo +
+                ", valorChequeEspecial=" + valorChequeEspecial +
+                '}';
     }
 }

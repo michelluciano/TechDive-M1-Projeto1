@@ -1,5 +1,6 @@
 package appBanco;
 
+import model.Conta;
 import model.ContaCorrente;
 import model.ContaInvestimento;
 import model.ContaPoupanca;
@@ -11,97 +12,102 @@ public class Main {
         System.out.println("Seja bem vindo ao Banco Tech Dive!");
 
         Scanner input = new Scanner(System.in);
+
+        Conta conta[] = new Conta[5];
+        Conta contaDestino = null;
+        int i = 0;
         int opcao;
         int opcaoConta;
         int numeroDaConta= 0;
         double valorTransacao =0;
-        ContaCorrente cc =null;
+        int serialContas = 0;
+        String nome;
+        String cpf;
+        double rendaMensal;
+        int agencia =0;
+        double saldo;
+
+
+        ContaCorrente cc = null;
         ContaInvestimento ci = null;
         ContaPoupanca cp = null;
-        int serialConta = 000 + 1;
+
 
         do{
+            System.out.println("=========================================");
+            System.out.println("         B A N C O   T E C H D I V E     ");
+            System.out.println("=========================================");
             System.out.println("Escolha uma opção abaixo:");
             System.out.println("1 - Abrir/Alterar conta");
             System.out.println("2 - Sacar");
             System.out.println("3 - Depositar");
             System.out.println("4 - Saldo");
-            System.out.println("5 - Transferir");
-            System.out.println("6 - Relatórios");
-            System.out.println("7 - Sair");
+            System.out.println("5 - Extrato");
+            System.out.println("6 - Transferir");
+            System.out.println("7 - Relatórios");
+            System.out.println("8 - Sair");
+            System.out.println("=========================================");
             opcao = input.nextInt();
 
             switch (opcao){
                 case 1:
+
                     System.out.println("Qual tipo de conta você deseja abrir?\n1.Conta Corrente\n2.Conta Investimento\n3.Conta Poupança\n4.Alterar dados de conta existente");
                     opcaoConta = input.nextInt();
+                    input.nextLine();
                     if (opcaoConta == 1){
-                        cc = new ContaCorrente();
+
+                        for (i =0 ; i < conta.length ; i++) {
+                            if (conta[i] == null) {
+                                conta[i] = new Conta();
+                                break;
+                            }
+                        }
+
                         System.out.println("Digite o nome do cliente:");
-                        cc.setNome(input.nextLine());
+                        nome = input.nextLine();
                         System.out.println("Digite o CPF");
-                        cc.setCpf(input.nextLine());
+                        cpf = input.nextLine();
                         System.out.println("Digite a renda mensal:");
-                        cc.setRendaMensal(input.nextDouble());
-                        cc.setConta(serialConta);
-                        System.out.println("Digite a Agencia:\n 001 - Florianópolis\n002 - São José");
+                        rendaMensal = input.nextDouble();
+                        System.out.println("Digite a Agencia:\n001 - Florianópolis\n002 - São José");
                         if (input.nextInt() == 1){
-                            cc.setAgencia(1);;
+                            agencia=1;
                         }else if (input.nextInt() == 2){
-                            cc.setAgencia(2);;
+                            agencia =2;
                         }
                         System.out.println("Digite o valor do saldo inicial:");
-                        cc.setSaldo(input.nextDouble());
-                        cc.saldo(serialConta);
+                        saldo = input.nextDouble();
+                        //cc = new ContaCorrente();
+                        conta[i].setConta(serialContas++);
+                        conta[i].setNome(nome);
+                        conta[i].setCpf(cpf);
+                        conta[i].setRendaMensal(rendaMensal);
+                        conta[i].setSaldo(saldo);
+                        conta[i].setAgencia(agencia);
+                        for (i =0 ; i < conta.length ; i++) {
+                            System.out.println(conta[i]);
+                        }
+
+
                     }
                     else if(opcaoConta == 2){
-                        ci = new ContaInvestimento();
-                        System.out.println("Digite o nome do cliente:");
-                        ci.setNome(input.nextLine());
-                        System.out.println("Digite o CPF");
-                        ci.setCpf(input.nextLine());
-                        System.out.println("Digite a renda mensal:");
-                        ci.setRendaMensal(input.nextDouble());
-                        ci.setConta(serialConta);
-                        System.out.println("Digite a Agencia:\n 001 - Florianópolis\n002 - São José");
-                        if (input.nextInt() == 1){
-                            ci.setAgencia(1);;
-                        }else if (input.nextInt() == 2){
-                            ci.setAgencia(2);;
-                        }
-                        System.out.println("Digite o valor do saldo inicial:");
-                        ci.setSaldo(input.nextDouble());
+
                     }else if (opcaoConta ==3){
-                        cp = new ContaPoupanca();
-                        System.out.println("Digite o nome do cliente:");
-                        cp.setNome(input.nextLine());
-                        System.out.println("Digite o CPF");
-                        cp.setCpf(input.nextLine());
-                        System.out.println("Digite a renda mensal:");
-                        cp.setRendaMensal(input.nextDouble());
-                        cp.setConta(serialConta);
-                        System.out.println("Digite a Agencia:\n 001 - Florianópolis\n002 - São José");
-                        if (input.nextInt() == 1){
-                            cp.setAgencia(1);;
-                        }else if (input.nextInt() == 2){
-                            cp.setAgencia(2);;
-                        }
-                        System.out.println("Digite o valor do saldo inicial:");
-                        cp.setSaldo(input.nextDouble());
+
                     }else{
                         System.out.println();
                         System.out.println("Digite o nome do cliente:");
-                        String nome=input.nextLine();
+                        nome = input.nextLine();
                         System.out.println("Digite a renda mensal:");
-                        double rendaMensal= input.nextDouble();
-                        System.out.println("Digite a Agencia:\n 001 - Florianópolis\n002 - São José");
-                        int agencia =0;
+                        rendaMensal= input.nextDouble();
+                        System.out.println("Digite a Agencia:\n001 - Florianópolis\n002 - São José");
                         if (input.nextInt() == 1){
                             agencia =1;
                         }else if (input.nextInt() == 2){
                             agencia= 2;
                         }
-                        cc.alterarDadosCadastrados(nome,rendaMensal,agencia);
+                        conta[i].alterarDadosCadastrados(nome,rendaMensal,agencia);
                     }
                     break;
                 case 2 :
@@ -111,8 +117,7 @@ public class Main {
                     System.out.println("Digite o valor do SAQUE:");
                     valorTransacao = input.nextDouble();
 
-                    cc.sacar(valorTransacao);
-                    cc.extrato(numeroDaConta);
+                    conta[i].sacar(valorTransacao);
 
                 break;
                 case 3:
@@ -122,36 +127,46 @@ public class Main {
                     System.out.println("Digite o valor do DEPOSITO:");
                     valorTransacao = input.nextDouble();
 
-                    cc.depositar(valorTransacao);
-                    cc.extrato(numeroDaConta);
+                    conta[i].depositar(valorTransacao);
 
                 break;
                 case 4:
                     //SALDO
                     System.out.println("Digite o numero da conta para verificar o SALDO:");
                     numeroDaConta = input.nextInt();
-                    cc.saldo(numeroDaConta);
+                    conta[i].saldo(numeroDaConta);
 
                 break;
                 case 5:
-                    //transferir
-                    System.out.println("Digite o numero da conta para a trasnferencia:");
-                    numeroDaConta = input.nextInt();
-                    System.out.println("Digite o valor a ser trasnferido: R$");
-                    valorTransacao = input.nextDouble();
-
-                    cc.transferePara(valorTransacao,cc);
+                    //extrato
+                    System.out.println("Digite o numero da conta para ver o EXTRATO:");
+                    conta[i].extrato(input.nextInt());
 
                 break;
                 case 6:
-                    //relatorios;
+                    //trasnferir;
+                    System.out.println("Digite o valor a ser trasnferido:");
+                    valorTransacao = input.nextDouble();
+                    System.out.print("Conta para transferência: ");
+                    numeroDaConta = input.nextInt();
+                    for ( i =0 ; i < conta.length ; i++) {
+                        if (conta[i].getConta() == numeroDaConta) {
+                            contaDestino = conta[i];
 
-                    break;
+                            break;
+
+                        }else{
+                            System.out.println("A conta numero "+numeroDaConta+" não existe.");
+                        }
+                    }
+                    conta[i].transferePara(valorTransacao,contaDestino);
+
+                break;
             }// fim switch
 
 
 
-        }while (opcao != 7);
+        }while (opcao != 8);
 
     }// fecha main
 }// fecha classe
